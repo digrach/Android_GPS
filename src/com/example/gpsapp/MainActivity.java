@@ -1,3 +1,5 @@
+// Rachael Colley 2014
+
 package com.example.gpsapp;
 
 import android.app.Activity;
