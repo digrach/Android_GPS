@@ -3,7 +3,7 @@
     package="com.example.gpsapp"
     android:versionCode="1"
     android:versionName="1.0" >
-    
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -28,6 +28,10 @@
         <activity
             android:name="com.example.gpsapp.GPSActivity"
             android:label="@string/title_activity_gps" >
+        </activity>
+        <activity
+            android:name="com.example.gpsapp.TestActivity"
+            android:label="@string/title_activity_test" >
         </activity>
     </application>
 

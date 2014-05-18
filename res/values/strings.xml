@@ -5,6 +5,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_gps">GPSActivity</string>
+    <string name="lbl_click_here">Click here!</string>
+ 
     <string name="lbl_currentlatlong">Current lat/long: </string>
     <string name="lbl_currentaltitude">Current altitude: </string>
     <string name="lbl_currentbearing">Current bearing: </string>
@@ -14,7 +16,7 @@
     <string name="lbl_currentspeed">Current speed (meters/seconds): </string>
     <string name="lbl_currentdistancetomelbourne">Current distance to Melbourne, VIC, AU (meters): </string>
     <string name="lbl_distancebetweenmelbournesanfran">Distance between Melbourne, VIC, AU and San Francisco, CA, USA (meters): </string>
-    
     <string name="waiting_text">waiting...</string>
+    <string name="title_activity_test">TestActivity</string>
 
 </resources>

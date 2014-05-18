@@ -1,10 +1,10 @@
+// Rachael Colley 2014
+
 package com.example.gpsapp;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.annotation.SuppressLint;
+
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -16,17 +16,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.os.Build;
+import android.widget.Toast;
 
-public class GPSActivity extends ActionBarActivity {
+public class GPSActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_gps);
+		setContentView(R.layout.activity_gps); // uses the layout in activity_gps.xml
 
 		if (savedInstanceState == null) {
-			getSupportFragmentManager().beginTransaction()
+			getFragmentManager().beginTransaction()
 			.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 	}
@@ -55,8 +55,10 @@ public class GPSActivity extends ActionBarActivity {
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class PlaceholderFragment extends Fragment {
+		
+		static Activity activity;
 
-		static LocationManager lm;
+		static LocationManager lm; // http://developer.android.com/reference/android/location/LocationManager.html
 
 		static TextView txtSats;
 		static TextView txtaltitude;
@@ -79,12 +81,12 @@ public class GPSActivity extends ActionBarActivity {
 		static float speed;
 
 
-		final static LocationListener mLocationListener = new LocationListener() {
-
+		// In-line anonymous class
+		final static LocationListener mLocationListener = new LocationListener() { // http://developer.android.com/reference/android/location/LocationListener.html
+			
 			@Override
 			public void onLocationChanged(Location location) {
 				populateLocationData();
-
 			}
 
 			@Override
@@ -108,24 +110,21 @@ public class GPSActivity extends ActionBarActivity {
 
 		};
 		
-		
-		
 
 		public PlaceholderFragment() {
-
-
+			
 		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_g, container,
-					false);
+			
+			activity = this.getActivity();
+			
+			View rootView = inflater.inflate(R.layout.fragment_g, container, false); // uses the layout in fragment_g.xml
 
 			lm = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
-			
-			
-			lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, mLocationListener);
+			lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 1, mLocationListener); // http://developer.android.com/reference/android/location/LocationManager.html#requestLocationUpdates(java.lang.String, long, float, android.location.LocationListener)
 			
 			txtSats = (TextView) rootView.findViewById(R.id.txtStats);
 			txtaltitude = (TextView) rootView.findViewById(R.id.txtaltitude);
@@ -142,7 +141,7 @@ public class GPSActivity extends ActionBarActivity {
 
 		private static void populateLocationData() {
 
-			if (lm.getLastKnownLocation(LocationManager.GPS_PROVIDER) != null) {
+			if (lm.getLastKnownLocation(LocationManager.GPS_PROVIDER) != null) { // http://developer.android.com/reference/android/location/LocationManager.html#getLastKnownLocation(java.lang.String)
 
 				lat = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLatitude();
 				lon = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER).getLongitude();
@@ -153,16 +152,15 @@ public class GPSActivity extends ActionBarActivity {
 				UTCTime = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER).getTime();
 				speed = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER).getSpeed();
 
-				Location locMelbourne = new Location(LocationManager.GPS_PROVIDER);
+				Location locMelbourne = new Location(LocationManager.GPS_PROVIDER); // http://developer.android.com/reference/android/location/Location.html
 				locMelbourne.setLatitude(-37.8602828);
 				locMelbourne.setLongitude(145.079616);
-				float distanceToMelbourne = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER).distanceTo(locMelbourne);
+				float distanceToMelbourne = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER).distanceTo(locMelbourne); // http://developer.android.com/reference/android/location/Location.html#distanceTo(android.location.Location)
 
 				Location locSanFran = new Location(LocationManager.GPS_PROVIDER);
 				locSanFran.setLatitude(37.7577);
 				locSanFran.setLongitude(-122.4376);
 				float distanceBetweenMelbourneSanFran = locMelbourne.distanceTo(locSanFran);
-
 
 				txtSats.setText(Double.toString(lat) + " " + Double.toString(lon));		
 				txtaltitude.setText((Double.toString(altitude)));
@@ -173,9 +171,10 @@ public class GPSActivity extends ActionBarActivity {
 				txtspeed.setText((Float.toString(speed)));
 				txtdistancetomelbourne.setText((Float.toString(distanceToMelbourne)));
 				txtdistancebetweenmelbournesanfran.setText((Float.toString(distanceBetweenMelbourneSanFran)));
+				
+				Toast.makeText(activity, "Your location has been updated!", Toast.LENGTH_SHORT).show();;
 
 			}
-
 
 		}
 
